@@ -1,53 +1,84 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableHighlight,
+  ScrollView,
+  NavigationExperimental
 } from 'react-native';
 
-export default class navigation extends Component {
+// bring in NavigationCardStack and NavigationStateUtils by destructuring NavigationExperimental
+const {
+  CardStack: NavigationCardStack,
+  StateUtils: NavigationStateUtils
+} = NavigationExperimental
+
+// setup reducer
+
+class navigation extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
+      <Home />
     );
   }
 }
 
+const Button = ({title, onPress}) => (
+  <TouchableHighlight
+    underlayColor='#EFEFEF'
+    onPress={onPress}
+    style={styles.button}>
+      <Text>{title}</Text>
+  </TouchableHighlight>
+)
+
+const Home = ({ onPress}) => (
+  <View style={styles.container}>
+    <Text style={styles.title}>Hello From Home</Text>
+    <Button onPress={onPress} title='Go To Next Scene' />
+  </View>
+)
+
+const About = ({ onPress, goBack }) => (
+ <View style={styles.container}>
+   <Text style={styles.title}>Hello From About</Text>
+   <Button onPress={onPress} title='Go To Next Scene' />
+   <Button onPress={goBack} title='Go Back' />
+ </View>
+)
+
+const Contact = ({ goBack }) => (
+  <View style={styles.container}>
+  <Text style={styles.title} >Hello From Contact</Text>
+  <Button title='Go Back' onPress={goBack} />
+  </View>
+)
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  scrollView: {
+      backgroundColor: '#F5FCFF',
+      flex: 1
+    },
+    container: {
+      flex: 1,
+      backgroundColor: '#F5FCFF'
+    },
+    title: {
+      fontSize: 40,
+      marginTop: 200,
+      textAlign: 'center'
+    },
+    button: {
+      height: 70,
+      marginTop: 20,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginLeft: 20,
+      marginRight: 20,
+      backgroundColor: '#EDEDED'
+    }
 });
 
 AppRegistry.registerComponent('navigation', () => navigation);
