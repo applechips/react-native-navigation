@@ -16,6 +16,26 @@ const {
 } = NavigationExperimental
 
 // setup reducer
+function createReducer(initialState) {
+  return (currentState = initialState, action) => {
+    switch (action.type) {
+      case 'push':
+        return NavigationStateUtils.push(currentState, {key: action.key});
+      case 'pop':
+      return currentState.index > 0 ?
+        NavigationStateUtils.pop(currentState) :
+          currentState;
+        default:
+          return currentState;
+    }
+  }
+}
+
+const NavReducer = createReducer({
+  index: 0,
+  key: 'App',
+  routes: [{ key: 'Home' }]
+})
 
 class navigation extends Component {
   render() {
